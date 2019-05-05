@@ -1,5 +1,3 @@
-console.log("renderer process says hello");
-
 const {
     Scheduler
 } = require('./scheduler')
@@ -15,4 +13,3 @@ async function main() {
 }
 
 main()
-

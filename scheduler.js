@@ -2,7 +2,9 @@ const schedule = require('node-schedule');
 
 class Scheduler {
     
-    constructor(){}
+    constructor(){
+        //...
+    }
 
     randomDate(start, end) {
         return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -16,7 +18,7 @@ class Scheduler {
         let arr = []
         const numb_jobs = 50
         for (let i = 0; i < numb_jobs; i++) {
-            d = randomDate(start, end)
+            let d = this.randomDate(start, end)
             arr.push([i, d]) // job_number, date
             console.log('OPEN: Job  -- #' + arr[i][0] + ' -- scheduled at: ' + arr[i][1]);
 
@@ -24,7 +26,7 @@ class Scheduler {
                 console.log('DONE: Job -- #' + arr[i][0] + ' -- executed at: ' + arr[i][1]);
             });
         }
-        console.log("\n Number of Jobs Scheduled: " + Object.keys(this.getQueue()).length + "\n");
+        console.log("\n Number of Jobs Scheduled: " + Object.keys(schedule.scheduledJobs).length + "\n");
     }
 }
 
