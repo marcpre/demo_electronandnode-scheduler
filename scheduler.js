@@ -1,8 +1,8 @@
 const schedule = require('node-schedule');
 
 class Scheduler {
-    
-    constructor(){
+
+    constructor() {
         //...
     }
 
@@ -14,7 +14,7 @@ class Scheduler {
         let start = new Date()
         let end = new Date()
         end.setSeconds(end.getSeconds() + 20) // add 5 seconds
-        
+
         let arr = []
         const numb_jobs = 50
         for (let i = 0; i < numb_jobs; i++) {

@@ -1,0 +1,78 @@
+<h1>Background Scheduler</h1>
+
+<script type="text/javascript">
+    const {
+        ipcRenderer
+    } = require('electron');
+     const {
+        Scheduler
+    } = require('./scheduler')
+
+    /*  async function main() {
+            try {
+                let sch = new Scheduler()
+                await sch.initScheduledContent()
+                console.log("Imported of jobs done!");
+            } catch (error) {
+                console.log(error);
+            }
+        } 
+        main()
+        */
+
+    // Send logs as messages to the main thread to show on the console
+    function log(value) {
+        ipcRenderer.send('to-main-log', process.pid + ': ' + value);
+    }
+
+    async function main() {
+        try {
+            let sch = new Scheduler()
+            await sch.initScheduledContent()
+            log("Imported of jobs done!");
+        } catch (error) {
+            log(error);
+        }
+    }
+
+    // let the main thread know this thread is ready to process something
+    function readyBg() {
+        ipcRenderer.send('ready-bg-scheduler')
+        log("Background Process ready.")
+
+        log('starting... ')
+        work()
+        /* main() */
+
+        log('finished... ')
+    }
+
+
+    // do some work that will tie up the processor for a while
+    function work() {
+        var start = new Date().getTime()
+        var result = 0
+        var finished = false
+        while (!finished) {
+            result += Math.random() * Math.random()
+            finished = new Date().getTime() > start + 10000
+        }
+    }
+
+
+
+
+
+    // if message is received, pass it back to the renderer via the main thread
+    /*     ipcRenderer.on('message', (event, arg) => {
+            log('received ' + arg)
+            ipcRenderer.send('for-renderer', process.pid + ': reply to ' + arg)
+            ready()
+        }); */
+    /* 	ipcRenderer.on('task', (event, arg) => {
+
+        }) */
+
+    // bg is ready
+    readyBg()
+</script>

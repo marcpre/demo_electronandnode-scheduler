@@ -1,8 +1,24 @@
-const {app, BrowserWindow} = require('electron')
+const {
+  app,
+  BrowserWindow,
+  ipcMain
+} = require('electron')
 
 let mainWindow
 
-function createWindow () {
+// Create a hidden background window
+function createBgSchedulerWindow() {
+  result = new BrowserWindow({
+    "show": true
+  })
+  result.loadURL('file://' + __dirname + '/background-scheduler.html')
+  result.on('closed', () => {
+    console.log('background window closed')
+  });
+  return result
+}
+
+function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -39,3 +55,22 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+/**
+ * Background Queue
+ */
+
+ipcMain.on('ready-index', (event, arg) => {
+  console.log("\n Setup bg-window");
+  // create Bg Window AFTER app started
+  createBgSchedulerWindow()
+})
+
+ipcMain.on('ready-bg-scheduler', (event, arg) => {
+  console.log("App Ready!");
+})
+
+// Log Messages from processes
+ipcMain.on('to-main-log', (event, arg) => {
+  console.log(arg)
+});
