@@ -8,18 +8,6 @@
         Scheduler
     } = require('./scheduler')
 
-    /*  async function main() {
-            try {
-                let sch = new Scheduler()
-                await sch.initScheduledContent()
-                console.log("Imported of jobs done!");
-            } catch (error) {
-                console.log(error);
-            }
-        } 
-        main()
-        */
-
     // Send logs as messages to the main thread to show on the console
     function log(value) {
         ipcRenderer.send('to-main-log', process.pid + ': ' + value);
@@ -29,7 +17,7 @@
         try {
             let sch = new Scheduler()
             await sch.initScheduledContent()
-            log("Imported of jobs done!");
+            log("Import of jobs done!");
         } catch (error) {
             log(error);
         }
@@ -41,15 +29,16 @@
         log("Background Process ready.")
 
         log('starting... ')
-        work()
+        /* work() */
         /* main() */
-
-        log('finished... ')
+        main().then(() => {
+            log('finished... ')
+        })
     }
 
 
     // do some work that will tie up the processor for a while
-    function work() {
+/*     function work() {
         var start = new Date().getTime()
         var result = 0
         var finished = false
@@ -59,21 +48,7 @@
             finished = new Date().getTime() > start + 10000
         }
     }
-
-
-
-
-
-    // if message is received, pass it back to the renderer via the main thread
-    /*     ipcRenderer.on('message', (event, arg) => {
-            log('received ' + arg)
-            ipcRenderer.send('for-renderer', process.pid + ': reply to ' + arg)
-            ready()
-        }); */
-    /* 	ipcRenderer.on('task', (event, arg) => {
-
-        }) */
-
+ */
     // bg is ready
     readyBg()
 </script>

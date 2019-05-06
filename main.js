@@ -9,7 +9,7 @@ let mainWindow
 // Create a hidden background window
 function createBgSchedulerWindow() {
   result = new BrowserWindow({
-    "show": true
+    "show": false // TODO hidde bg window here
   })
   result.loadURL('file://' + __dirname + '/background-scheduler.html')
 
@@ -56,19 +56,18 @@ app.on('activate', function () {
   if (mainWindow === null) createWindow()
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
 
 /**
  * Background Queue
  */
-
+// check if main process is ready
 ipcMain.on('ready-index', (event, arg) => {
   console.log("\n Setup bg-window");
   // create Bg Window AFTER app started
   createBgSchedulerWindow()
 })
 
+//Check if BG Process is ready
 ipcMain.on('ready-bg-scheduler', (event, arg) => {
   console.log("App Ready!");
 })

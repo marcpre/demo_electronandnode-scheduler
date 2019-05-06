@@ -13,7 +13,7 @@ class Scheduler {
     async initScheduledContent() {
         let start = new Date()
         let end = new Date()
-        end.setSeconds(end.getSeconds() + 20) // add 5 seconds
+        end.setSeconds(end.getSeconds() + 15) // add 5 seconds
 
         let arr = []
         const numb_jobs = 50
