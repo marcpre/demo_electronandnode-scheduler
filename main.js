@@ -12,6 +12,9 @@ function createBgSchedulerWindow() {
     "show": true
   })
   result.loadURL('file://' + __dirname + '/background-scheduler.html')
+
+  result.webContents.openDevTools()
+
   result.on('closed', () => {
     console.log('background window closed')
   });

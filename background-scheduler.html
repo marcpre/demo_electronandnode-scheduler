@@ -55,6 +55,7 @@
         var finished = false
         while (!finished) {
             result += Math.random() * Math.random()
+            console.log("result: " + result);
             finished = new Date().getTime() > start + 10000
         }
     }
